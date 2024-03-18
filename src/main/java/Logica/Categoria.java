@@ -10,25 +10,15 @@ import javax.persistence.Id;
 
 @Entity
 public class Categoria implements Serializable {
+    
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
     private String nombre;
 
     public Categoria() {
     }
 
-    public Categoria(Long id, String nombre) {
-        this.id = id;
+    public Categoria(String nombre) {
         this.nombre = nombre;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getNombre() {

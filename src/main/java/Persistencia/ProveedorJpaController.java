@@ -1,10 +1,8 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
-*/
-
+ */
 package Persistencia;
-
 
 import Logica.Proveedor;
 import Persistencia.exceptions.NonexistentEntityException;
@@ -18,7 +16,10 @@ import javax.persistence.Persistence;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
-
+/**
+ *
+ * @author Pc
+ */
 public class ProveedorJpaController implements Serializable {
 
     public ProveedorJpaController(EntityManagerFactory emf) {

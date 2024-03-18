@@ -93,6 +93,11 @@ public class ventanaPrincipal extends javax.swing.JFrame {
         menuAlta.add(menuAltaCategoria);
 
         menuAltaProveedor.setText("Proveedor");
+        menuAltaProveedor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuAltaProveedorActionPerformed(evt);
+            }
+        });
         menuAlta.add(menuAltaProveedor);
 
         jMenuBar1.add(menuAlta);
@@ -153,7 +158,9 @@ public class ventanaPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void menuAltaProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuAltaProductoActionPerformed
-
+        altaProducto verAltaProducto = new altaProducto(control);
+        panelPrincipal.add(verAltaProducto);
+        verAltaProducto.show();
     }//GEN-LAST:event_menuAltaProductoActionPerformed
 
     private void menuAltaCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuAltaCategoriaActionPerformed
@@ -161,6 +168,12 @@ public class ventanaPrincipal extends javax.swing.JFrame {
         panelPrincipal.add(verAltaCategoria);
         verAltaCategoria.show();
     }//GEN-LAST:event_menuAltaCategoriaActionPerformed
+
+    private void menuAltaProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuAltaProveedorActionPerformed
+        altaProveedor verAltaProveedor = new altaProveedor(control);
+        panelPrincipal.add(verAltaProveedor);
+        verAltaProveedor.show();
+    }//GEN-LAST:event_menuAltaProveedorActionPerformed
 
     /**
      * @param args the command line arguments

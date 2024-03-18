@@ -2,6 +2,7 @@
 package Logica;
 
 import java.io.Serializable;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,9 +14,12 @@ public class Proveedor implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    
+    @Column(unique = true) // Esto asegura que el nombre sea único en la base de datos
     private String nombre;
-    private String informacionDeContacto; // Opcional
-
+    
+    private String informacionDeContacto; 
+    
     public Proveedor() {
     }
 
@@ -24,6 +28,13 @@ public class Proveedor implements Serializable {
         this.nombre = nombre;
         this.informacionDeContacto = informacionDeContacto;
     }
+
+    public Proveedor(String nombre, String informacionDeContacto) {
+        this.nombre = nombre;
+        this.informacionDeContacto = informacionDeContacto;
+    }
+    
+    
 
     public Long getId() {
         return id;
