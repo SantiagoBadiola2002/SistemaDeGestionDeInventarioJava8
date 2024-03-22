@@ -6,6 +6,7 @@ package Persistencia;
 
 import Logica.Proveedor;
 import Persistencia.exceptions.NonexistentEntityException;
+import Persistencia.exceptions.PreexistingEntityException;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -35,13 +36,18 @@ public class ProveedorJpaController implements Serializable {
         emf = Persistence.createEntityManagerFactory("inventarioPU");
     }
 
-    public void create(Proveedor proveedor) {
+    public void create(Proveedor proveedor) throws PreexistingEntityException, Exception {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
             em.persist(proveedor);
             em.getTransaction().commit();
+        } catch (Exception ex) {
+            if (findProveedor(proveedor.getNombre()) != null) {
+                throw new PreexistingEntityException("Proveedor " + proveedor + " already exists.", ex);
+            }
+            throw ex;
         } finally {
             if (em != null) {
                 em.close();
@@ -59,7 +65,7 @@ public class ProveedorJpaController implements Serializable {
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
-                Long id = proveedor.getId();
+                String id = proveedor.getNombre();
                 if (findProveedor(id) == null) {
                     throw new NonexistentEntityException("The proveedor with id " + id + " no longer exists.");
                 }
@@ -72,7 +78,7 @@ public class ProveedorJpaController implements Serializable {
         }
     }
 
-    public void destroy(Long id) throws NonexistentEntityException {
+    public void destroy(String id) throws NonexistentEntityException {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -80,7 +86,7 @@ public class ProveedorJpaController implements Serializable {
             Proveedor proveedor;
             try {
                 proveedor = em.getReference(Proveedor.class, id);
-                proveedor.getId();
+                proveedor.getNombre();
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The proveedor with id " + id + " no longer exists.", enfe);
             }
@@ -117,7 +123,7 @@ public class ProveedorJpaController implements Serializable {
         }
     }
 
-    public Proveedor findProveedor(Long id) {
+    public Proveedor findProveedor(String id) {
         EntityManager em = getEntityManager();
         try {
             return em.find(Proveedor.class, id);

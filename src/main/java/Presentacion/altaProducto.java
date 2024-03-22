@@ -4,7 +4,11 @@
  */
 package Presentacion;
 
+import Logica.DTProveedor;
 import Logica.IControladora;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -48,6 +52,23 @@ private IControladora control;
         setClosable(true);
         setTitle("Alta Proveedor");
         setPreferredSize(new java.awt.Dimension(700, 600));
+        addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
+            public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeiconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
+                formInternalFrameOpened(evt);
+            }
+        });
 
         labelCantidad.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         labelCantidad.setText("Cantidad stock:");
@@ -168,6 +189,7 @@ private IControladora control;
             int cantStock = (int) spinerCantidad.getValue();
             String nombreCategoria = (String) cmbCategoria.getSelectedItem();
             String nombreProveedor = (String) cmbProveedor.getSelectedItem();
+            control.altaProducto(nombreProducto, desc, costo, cantStock, nombreCategoria, nombreProveedor);
             JOptionPane.showMessageDialog(null, "Alta realizada correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
         } catch (Exception ex){
             JOptionPane.showMessageDialog(null, "Ya hay un producto con ese nombre", "Error", JOptionPane.ERROR_MESSAGE);
@@ -179,6 +201,29 @@ private IControladora control;
         fieldNombre.setText("");
         fieldDescripcion.setText("");
     }//GEN-LAST:event_btnLimpiarActionPerformed
+
+    private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
+    try {
+        cmbCategoria.removeAllItems();
+        ArrayList<String> categorias = (ArrayList<String>) control.traerCategorias();
+        for (int i = 0; i < categorias.size(); i++) {
+            cmbCategoria.addItem(categorias.get(i));
+
+        }
+    } catch (Exception ex) {
+        JOptionPane.showMessageDialog(null, "Error al listar las categorias", "Error", JOptionPane.ERROR_MESSAGE);
+    }
+    
+    try{
+        cmbProveedor.removeAllItems();
+        ArrayList<DTProveedor> dtProveedor = (ArrayList<DTProveedor>) control.traerDTProveedores();
+        for (int i = 0; i < dtProveedor.size(); i++){
+            cmbProveedor.addItem(dtProveedor.get(i).getNombre());
+        }
+    }catch (Exception ex) {
+        JOptionPane.showMessageDialog(null, "Error al listar los proveedores", "Error", JOptionPane.ERROR_MESSAGE);
+    }
+    }//GEN-LAST:event_formInternalFrameOpened
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

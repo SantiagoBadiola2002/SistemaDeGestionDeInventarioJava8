@@ -3,6 +3,7 @@ Persistencia\ProveedorJpaController.class
 Logica\Controladora.class
 Persistencia\exceptions\NonexistentEntityException.class
 Presentacion\ventanaPrincipal.class
+Presentacion\altaProducto$3.class
 Presentacion\ventanaPrincipal$3.class
 Presentacion\altaProducto.class
 Logica\Categoria.class

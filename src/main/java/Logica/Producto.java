@@ -37,6 +37,17 @@ public class Producto implements Serializable {
         this.proveedor = proveedor;
     }
 
+    public Producto(String nombre, String descripcion, double precio, int cantidadEnStock, Categoria categoria, Proveedor proveedor) {
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.precio = precio;
+        this.cantidadEnStock = cantidadEnStock;
+        this.categoria = categoria;
+        this.proveedor = proveedor;
+    }
+    
+    
+
     public Long getId() {
         return id;
     }

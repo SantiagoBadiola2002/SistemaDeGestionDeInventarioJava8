@@ -3,19 +3,13 @@ package Logica;
 
 
 public class DTCategoria {
-    private Long id;
     private String nombre;
 
     public DTCategoria() {
     }
 
-    public DTCategoria(Long id, String nombre) {
-        this.id = id;
+    public DTCategoria(String nombre) {
         this.nombre = nombre;
-    }
-
-    public Long getId() {
-        return id;
     }
 
     public String getNombre() {
