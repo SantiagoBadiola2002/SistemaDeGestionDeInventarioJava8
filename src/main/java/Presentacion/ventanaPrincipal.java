@@ -131,12 +131,27 @@ public class ventanaPrincipal extends javax.swing.JFrame {
         menuListar.setText("LISTAR");
 
         menuListarProductos.setText("Productos");
+        menuListarProductos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuListarProductosActionPerformed(evt);
+            }
+        });
         menuListar.add(menuListarProductos);
 
         menuListarCategorias.setText("Categorias");
+        menuListarCategorias.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuListarCategoriasActionPerformed(evt);
+            }
+        });
         menuListar.add(menuListarCategorias);
 
         menuListarProveedores.setText("Proveedores");
+        menuListarProveedores.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuListarProveedoresActionPerformed(evt);
+            }
+        });
         menuListar.add(menuListarProveedores);
 
         jMenuBar1.add(menuListar);
@@ -174,6 +189,24 @@ public class ventanaPrincipal extends javax.swing.JFrame {
         panelPrincipal.add(verAltaProveedor);
         verAltaProveedor.show();
     }//GEN-LAST:event_menuAltaProveedorActionPerformed
+
+    private void menuListarCategoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuListarCategoriasActionPerformed
+        listaCategorias verListaCategorias = new listaCategorias(control);
+        panelPrincipal.add(verListaCategorias);
+        verListaCategorias.show();
+    }//GEN-LAST:event_menuListarCategoriasActionPerformed
+
+    private void menuListarProveedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuListarProveedoresActionPerformed
+        listaProveedores verListaProveedores = new listaProveedores(control);
+        panelPrincipal.add(verListaProveedores);
+        verListaProveedores.show();
+    }//GEN-LAST:event_menuListarProveedoresActionPerformed
+
+    private void menuListarProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuListarProductosActionPerformed
+        listaProductos verListaProductos = new listaProductos(control);
+        panelPrincipal.add(verListaProductos);
+        verListaProductos.show();
+    }//GEN-LAST:event_menuListarProductosActionPerformed
 
     /**
      * @param args the command line arguments

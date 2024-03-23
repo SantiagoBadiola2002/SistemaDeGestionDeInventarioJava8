@@ -80,6 +80,20 @@ public class Controladora implements IControladora {
 
         return dtProveedores;
     }
+    
+    public List<DTProducto> traerDTProductos() throws Exception {
+        List<Producto> productos = productoJpa.findProductoEntities();
+        List<DTProducto> dtProductos = new ArrayList<>();
+
+        for (Producto producto : productos) {
+            DTProducto dtProducto = new DTProducto(producto.getId(), producto.getNombre(), 
+                    producto.getDescripcion(), producto.getPrecio(), producto.getCantidadEnStock(), 
+                    producto.getCategoria().getNombre(), producto.getProveedor().getNombre());
+            dtProductos.add(dtProducto);
+        }
+
+        return dtProductos;
+    }
 
     @Override
     public Categoria traerCategoria(String nombreCategoria) throws Exception {
