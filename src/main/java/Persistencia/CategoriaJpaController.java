@@ -6,7 +6,6 @@ package Persistencia;
 
 import Logica.Categoria;
 import Persistencia.exceptions.NonexistentEntityException;
-import Persistencia.exceptions.PreexistingEntityException;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -32,22 +31,17 @@ public class CategoriaJpaController implements Serializable {
         return emf.createEntityManager();
     }
     
-    public CategoriaJpaController() {
+      public CategoriaJpaController() {
         emf = Persistence.createEntityManagerFactory("inventarioPU");
     }
 
-    public void create(Categoria categoria) throws PreexistingEntityException, Exception {
+    public void create(Categoria categoria) {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
             em.persist(categoria);
             em.getTransaction().commit();
-        } catch (Exception ex) {
-            if (findCategoria(categoria.getNombre()) != null) {
-                throw new PreexistingEntityException("Categoria " + categoria + " already exists.", ex);
-            }
-            throw ex;
         } finally {
             if (em != null) {
                 em.close();
@@ -65,7 +59,7 @@ public class CategoriaJpaController implements Serializable {
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
-                String id = categoria.getNombre();
+                int id = categoria.getId();
                 if (findCategoria(id) == null) {
                     throw new NonexistentEntityException("The categoria with id " + id + " no longer exists.");
                 }
@@ -78,7 +72,7 @@ public class CategoriaJpaController implements Serializable {
         }
     }
 
-    public void destroy(String id) throws NonexistentEntityException {
+    public void destroy(int id) throws NonexistentEntityException {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -86,7 +80,7 @@ public class CategoriaJpaController implements Serializable {
             Categoria categoria;
             try {
                 categoria = em.getReference(Categoria.class, id);
-                categoria.getNombre();
+                categoria.getId();
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The categoria with id " + id + " no longer exists.", enfe);
             }
@@ -123,7 +117,7 @@ public class CategoriaJpaController implements Serializable {
         }
     }
 
-    public Categoria findCategoria(String id) {
+    public Categoria findCategoria(int id) {
         EntityManager em = getEntityManager();
         try {
             return em.find(Categoria.class, id);

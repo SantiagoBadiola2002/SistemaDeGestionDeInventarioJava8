@@ -1,7 +1,5 @@
 package Logica;
 
-import static Logica.Producto_.categoria;
-import static Logica.Producto_.proveedor;
 import Persistencia.CategoriaJpaController;
 import Persistencia.ProductoJpaController;
 import Persistencia.ProveedorJpaController;
@@ -43,7 +41,7 @@ public class Controladora implements IControladora {
 
     @Override
     public void altaProducto(String nombreProducto, String desc, double costo, int cantStock, String nombreCategoria, String nombreProveedor) throws Exception {
-        
+
         Categoria categoria = traerCategoria(nombreCategoria);
         Proveedor proveedor = traerProveedor(nombreProveedor);
         Producto producto = new Producto(nombreProducto, desc, costo, cantStock, categoria, proveedor);
@@ -55,15 +53,37 @@ public class Controladora implements IControladora {
     }
 
     @Override
-    public List<String> traerCategorias() throws Exception {
-        List<String> listaCategorias = new ArrayList<String>();
+    public void modificarCategoria(String categoriaAAmodificar, String nuevoNombreCategoria) throws Exception {
+        try {
+            List<Categoria> categorias = categoriaJpa.findCategoriaEntities();
+            int idCategoriaAModificar = -1;
+
+            for (Categoria c : categorias) {
+                if (c.getNombre().equals(categoriaAAmodificar)) {
+                    idCategoriaAModificar = c.getId(); // Suponiendo que existe un método getId() en la clase Categoria para obtener la ID
+                    break; // Se encontró la categoría, se puede salir del bucle
+                }
+            }
+            Categoria categoriaModificada = new Categoria(idCategoriaAModificar, nuevoNombreCategoria);
+            //Categoria categoriaModificada = new Categoria(nuevoNombreCategoria);
+            categoriaJpa.edit(categoriaModificada);
+        } catch (Exception ex) {
+            throw new Exception("Error al modificar la categoria.");
+        }
+    }
+
+    @Override
+    public List<DTCategoria> traerCategorias() throws Exception {
+        List<DTCategoria> listaCategorias = new ArrayList<DTCategoria>();
         try {
             List<Categoria> categorias = categoriaJpa.findCategoriaEntities();
             for (Categoria c : categorias) {
-                listaCategorias.add(c.getNombre());
+                DTCategoria dtCategoria = new DTCategoria(c.getId(), c.getNombre());
+                listaCategorias.add(dtCategoria);
             }
         } catch (Exception ex) {
             Logger.getLogger(Controladora.class.getName()).log(Level.SEVERE, null, ex);
+            // Aquí podrías manejar la excepción de alguna manera si es necesario.
         }
         return listaCategorias;
     }
@@ -80,14 +100,15 @@ public class Controladora implements IControladora {
 
         return dtProveedores;
     }
-    
+
+    @Override
     public List<DTProducto> traerDTProductos() throws Exception {
         List<Producto> productos = productoJpa.findProductoEntities();
         List<DTProducto> dtProductos = new ArrayList<>();
 
         for (Producto producto : productos) {
-            DTProducto dtProducto = new DTProducto(producto.getId(), producto.getNombre(), 
-                    producto.getDescripcion(), producto.getPrecio(), producto.getCantidadEnStock(), 
+            DTProducto dtProducto = new DTProducto(producto.getId(), producto.getNombre(),
+                    producto.getDescripcion(), producto.getPrecio(), producto.getCantidadEnStock(),
                     producto.getCategoria().getNombre(), producto.getProveedor().getNombre());
             dtProductos.add(dtProducto);
         }
@@ -97,23 +118,34 @@ public class Controladora implements IControladora {
 
     @Override
     public Categoria traerCategoria(String nombreCategoria) throws Exception {
-        Categoria categoria = null; // Declaración fuera del bloque try
+        Categoria categoria = null;
+        int idCategoria = -1;
+        List<Categoria> categorias = categoriaJpa.findCategoriaEntities();
+
+        for (Categoria c : categorias) {
+            if (c.getNombre().equals(nombreCategoria)) {
+                idCategoria = c.getId();
+                break;
+            }
+        }
+
         try {
-             categoria = categoriaJpa.findCategoria(nombreCategoria);
+            categoria = categoriaJpa.findCategoria(idCategoria);
         } catch (Exception ex) {
             Logger.getLogger(Controladora.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return  categoria;
+        return categoria;
     }
-    
-     public Proveedor traerProveedor(String nombreProveedor) throws Exception{
-         Proveedor proveedor = null;
-         try {
+
+    @Override
+    public Proveedor traerProveedor(String nombreProveedor) throws Exception {
+        Proveedor proveedor = null;
+        try {
             proveedor = proveedorJpa.findProveedor(nombreProveedor);
         } catch (Exception ex) {
             Logger.getLogger(Controladora.class.getName()).log(Level.SEVERE, null, ex);
         }
         return proveedor;
-     }
+    }
 
 }

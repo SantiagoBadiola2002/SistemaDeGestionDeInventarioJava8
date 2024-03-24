@@ -5,6 +5,7 @@
 package Presentacion;
 
 import Logica.Controladora;
+import Logica.DTCategoria;
 import Logica.IControladora;
 import Persistencia.exceptions.PreexistingEntityException;
 import java.util.ArrayList;
@@ -97,15 +98,16 @@ public class listaCategorias extends javax.swing.JInternalFrame {
     private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
         try {
             // Obtener las categorías del controlador
-            ArrayList<String> categorias = (ArrayList<String>) control.traerCategorias();
+            ArrayList<DTCategoria> categorias = (ArrayList<DTCategoria>) control.traerCategorias();
 
             // Crear el modelo de la tabla
             DefaultTableModel modelo = new DefaultTableModel();
+            modelo.addColumn("ID");
             modelo.addColumn("Categoría");
 
             // Llenar el modelo de tabla con los datos del ArrayList
-            for (String categoria : categorias) {
-                modelo.addRow(new Object[]{categoria});
+            for (DTCategoria categoria : categorias) {
+                modelo.addRow(new Object[]{categoria.getId(), categoria.getNombre()});
             }
 
             // Asignar el modelo de tabla al JTable

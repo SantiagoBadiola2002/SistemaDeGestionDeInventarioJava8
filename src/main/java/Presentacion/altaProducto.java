@@ -4,6 +4,7 @@
  */
 package Presentacion;
 
+import Logica.DTCategoria;
 import Logica.DTProveedor;
 import Logica.IControladora;
 import java.util.ArrayList;
@@ -205,9 +206,9 @@ private IControladora control;
     private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
     try {
         cmbCategoria.removeAllItems();
-        ArrayList<String> categorias = (ArrayList<String>) control.traerCategorias();
+        ArrayList<DTCategoria> categorias = (ArrayList<DTCategoria>) control.traerCategorias();
         for (int i = 0; i < categorias.size(); i++) {
-            cmbCategoria.addItem(categorias.get(i));
+            cmbCategoria.addItem(categorias.get(i).getNombre());
 
         }
     } catch (Exception ex) {
