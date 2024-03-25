@@ -118,6 +118,11 @@ public class ventanaPrincipal extends javax.swing.JFrame {
         menuModificar.setText("MODIFICAR");
 
         menuModificarProducto.setText("Producto");
+        menuModificarProducto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuModificarProductoActionPerformed(evt);
+            }
+        });
         menuModificar.add(menuModificarProducto);
 
         menuModificarCategoria.setText("Categoria");
@@ -229,6 +234,12 @@ public class ventanaPrincipal extends javax.swing.JFrame {
         panelPrincipal.add(verModificarProveedor);
         verModificarProveedor.show();
     }//GEN-LAST:event_menuModificarProveedorActionPerformed
+
+    private void menuModificarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuModificarProductoActionPerformed
+        modificarProducto verModificarProducto = new modificarProducto(control);
+        panelPrincipal.add(verModificarProducto);
+        verModificarProducto.show();
+    }//GEN-LAST:event_menuModificarProductoActionPerformed
 
     /**
      * @param args the command line arguments

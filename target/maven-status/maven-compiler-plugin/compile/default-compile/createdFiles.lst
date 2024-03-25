@@ -2,13 +2,17 @@ Presentacion\listaCategorias$1.class
 Presentacion\listaCategorias.class
 Presentacion\ventanaPrincipal.class
 Presentacion\ventanaPrincipal$5.class
+Presentacion\modificarCategoria$3.class
+Presentacion\modificarProducto$2.class
 Presentacion\ventanaPrincipal$8.class
 Presentacion\ventanaPrincipal$1.class
 Presentacion\modificarProveedor$3.class
 Presentacion\listaProveedores$1.class
+Presentacion\modificarProducto.class
 Presentacion\altaCategoria$1.class
 Logica\Categoria_.class
 Persistencia\ProductoJpaController.class
+Presentacion\ventanaPrincipal$9.class
 Presentacion\ventanaPrincipal$2.class
 Logica\Proveedor_.class
 Presentacion\altaProveedor.class
@@ -17,6 +21,7 @@ Presentacion\modificarProveedor$2.class
 Logica\Controladora.class
 Presentacion\modificarProveedor.class
 Presentacion\ventanaPrincipal$3.class
+Presentacion\modificarProducto$3.class
 porDefecto\main.class
 Logica\Producto_.class
 Presentacion\exceptions\IllegalOrphanException.class
@@ -27,6 +32,7 @@ Presentacion\ventanaPrincipal$6.class
 Presentacion\listaProductos$1.class
 Presentacion\modificarCategoria$2.class
 Presentacion\modificarCategoria.class
+Presentacion\modificarProducto$1.class
 Presentacion\modificarProveedor$1.class
 Presentacion\ventanaPrincipal$4.class
 Presentacion\altaCategoria.class

@@ -77,7 +77,11 @@ private IControladora control;
         labelNuevoNombre.setText("Nuevo nombre:");
 
         cmbCategoria.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        cmbCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbCategoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbCategoriaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -132,7 +136,7 @@ private IControladora control;
 
     private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
          try{
-        cmbCategoria.removeAllItems();
+        //cmbCategoria.removeAllItems();
         ArrayList<DTCategoria> categorias = (ArrayList<DTCategoria>) control.traerCategorias();
         for (int i = 0; i < categorias.size(); i++) {
             cmbCategoria.addItem(categorias.get(i).getNombre());
@@ -141,6 +145,15 @@ private IControladora control;
             JOptionPane.showMessageDialog(null, "Error al cargar las categorias", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_formInternalFrameOpened
+
+    private void cmbCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbCategoriaActionPerformed
+         try{
+        String categoriaActual = (String) cmbCategoria.getSelectedItem();
+        fieldNombre.setText(categoriaActual);
+        }catch(Exception ex){
+            JOptionPane.showMessageDialog(null, "Error al cargar el contacto del proveedor", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_cmbCategoriaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

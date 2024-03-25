@@ -2,6 +2,7 @@
 package Logica;
 
 import java.io.Serializable;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,6 +16,7 @@ public class Categoria implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     
+    @Column(unique = true)
     private String nombre;
 
     public Categoria() {

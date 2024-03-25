@@ -2,6 +2,7 @@
 package Logica;
 
 import java.io.Serializable;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,7 +14,10 @@ public class Producto implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    
+    @Column(unique = true)
     private String nombre;
+    
     private String descripcion;
     private double precio;
     private int cantidadEnStock;

@@ -3,12 +3,10 @@ package Logica;
 import Persistencia.CategoriaJpaController;
 import Persistencia.ProductoJpaController;
 import Persistencia.ProveedorJpaController;
-import Persistencia.exceptions.PreexistingEntityException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 
 public class Controladora implements IControladora {
 
@@ -55,29 +53,39 @@ public class Controladora implements IControladora {
     @Override
     public void modificarCategoria(String categoriaAAmodificar, String nuevoNombreCategoria) throws Exception {
         try {
-            List<Categoria> categorias = categoriaJpa.findCategoriaEntities();
-            int idCategoriaAModificar = -1;
 
-            for (Categoria c : categorias) {
-                if (c.getNombre().equals(categoriaAAmodificar)) {
-                    idCategoriaAModificar = c.getId(); // Suponiendo que existe un método getId() en la clase Categoria para obtener la ID
-                    break; // Se encontró la categoría, se puede salir del bucle
-                }
-            }
-            Categoria categoriaModificada = new Categoria(idCategoriaAModificar, nuevoNombreCategoria);
-            //Categoria categoriaModificada = new Categoria(nuevoNombreCategoria);
+            Categoria categoria = traerCategoria(categoriaAAmodificar);
+            Categoria categoriaModificada = new Categoria(categoria.getId(), nuevoNombreCategoria);
+
             categoriaJpa.edit(categoriaModificada);
         } catch (Exception ex) {
             throw new Exception("Error al modificar la categoria.");
         }
     }
-    
-    public  void modificarProveedor(String nombreProveedor, String nuevoContacto) throws Exception{
+
+    @Override
+    public void modificarProveedor(String nombreProveedor, String nuevoContacto) throws Exception {
         try {
             Proveedor proveedorAModificar = new Proveedor(nombreProveedor, nuevoContacto);
             proveedorJpa.edit(proveedorAModificar);
-         } catch (Exception ex) {
+        } catch (Exception ex) {
             throw new Exception("Error al modificar el proveedor.");
+        }
+    }
+
+    @Override
+    public void modificarProducto(String nombreProducto, String nuevoNombreProducto, String desc, double costo, int cantStock, String nombreCategoria, String nombreProveedor) throws Exception {
+        try {
+            Proveedor proveedor = proveedorJpa.findProveedor(nombreProveedor);
+            Categoria categoria = traerCategoria(nombreCategoria);
+            Producto producto = traerProducto(nombreProducto);
+            
+            Producto p = new Producto(producto.getId(), nuevoNombreProducto, desc, costo, cantStock, categoria, proveedor);
+            productoJpa.edit(p);
+           
+
+        } catch (Exception ex) {
+            throw new Exception("Error al modificar el producto");
         }
     }
 
@@ -124,12 +132,27 @@ public class Controladora implements IControladora {
 
         return dtProductos;
     }
-    
+
     @Override
-    public  DTProveedor traerDTProveedor(String nombreProveedor) throws Exception{
+    public DTProveedor traerDTProveedor(String nombreProveedor) throws Exception {
         Proveedor proveedor = proveedorJpa.findProveedor(nombreProveedor);
         DTProveedor dtProveedor = new DTProveedor(proveedor.getNombre(), proveedor.getInformacionDeContacto());
         return dtProveedor;
+    }
+
+    @Override
+    public DTProducto traerDTProducto(String nombreProducto) throws Exception {
+        try{
+            
+        Producto producto = traerProducto(nombreProducto);
+        DTProducto dtProducto = new DTProducto(producto.getId(), producto.getNombre(),
+                        producto.getDescripcion(), producto.getPrecio(), producto.getCantidadEnStock(),
+                        producto.getCategoria().getNombre(), producto.getProveedor().getNombre());
+           
+        return dtProducto;
+        }catch(Exception ex){
+                throw new Exception("Error al cargar el producto");
+                }
     }
 
     @Override
@@ -162,6 +185,21 @@ public class Controladora implements IControladora {
             Logger.getLogger(Controladora.class.getName()).log(Level.SEVERE, null, ex);
         }
         return proveedor;
+    }
+
+    @Override
+    public Producto traerProducto(String nombreProducto) throws Exception {
+        Producto producto = null;
+
+        List<Producto> productos = productoJpa.findProductoEntities();
+
+        for (Producto p : productos) {
+            if (p.getNombre().equals(nombreProducto)) {
+                producto = p;
+                break;
+            }
+        }
+        return producto;
     }
 
 }
