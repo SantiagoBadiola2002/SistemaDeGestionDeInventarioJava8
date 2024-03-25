@@ -71,6 +71,15 @@ public class Controladora implements IControladora {
             throw new Exception("Error al modificar la categoria.");
         }
     }
+    
+    public  void modificarProveedor(String nombreProveedor, String nuevoContacto) throws Exception{
+        try {
+            Proveedor proveedorAModificar = new Proveedor(nombreProveedor, nuevoContacto);
+            proveedorJpa.edit(proveedorAModificar);
+         } catch (Exception ex) {
+            throw new Exception("Error al modificar el proveedor.");
+        }
+    }
 
     @Override
     public List<DTCategoria> traerCategorias() throws Exception {
@@ -114,6 +123,13 @@ public class Controladora implements IControladora {
         }
 
         return dtProductos;
+    }
+    
+    @Override
+    public  DTProveedor traerDTProveedor(String nombreProveedor) throws Exception{
+        Proveedor proveedor = proveedorJpa.findProveedor(nombreProveedor);
+        DTProveedor dtProveedor = new DTProveedor(proveedor.getNombre(), proveedor.getInformacionDeContacto());
+        return dtProveedor;
     }
 
     @Override
