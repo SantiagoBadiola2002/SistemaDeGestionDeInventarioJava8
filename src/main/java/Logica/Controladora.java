@@ -88,6 +88,33 @@ public class Controladora implements IControladora {
             throw new Exception("Error al modificar el producto");
         }
     }
+    
+    @Override
+    public void eliminarProducto(Long idProducto) throws Exception{
+        try{
+            productoJpa.destroy(idProducto);
+        } catch (Exception ex) {
+            throw new Exception("Error al eliminar el producto");
+        }
+    }
+    
+    @Override
+    public void eliminarCategoria(int idCategoria) throws Exception{
+        try{
+            categoriaJpa.destroy(idCategoria);
+        } catch (Exception ex) {
+            throw new Exception("Error al eliminar la categoria");
+        }
+    }
+    
+    @Override
+    public void eliminarProveedor(String nombreProveedor) throws Exception{
+        try{
+            proveedorJpa.destroy(nombreProveedor);
+        } catch (Exception ex) {
+            throw new Exception("Error al eliminar el proveedor");
+        }
+    }
 
     @Override
     public List<DTCategoria> traerCategorias() throws Exception {

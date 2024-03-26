@@ -42,6 +42,7 @@ public class listaCategorias extends javax.swing.JInternalFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         tableCategorias = new javax.swing.JTable();
+        btnEliminar = new javax.swing.JButton();
 
         setClosable(true);
         setTitle("Lista Categorias");
@@ -72,16 +73,27 @@ public class listaCategorias extends javax.swing.JInternalFrame {
 
             }
         ));
-        tableCategorias.setEnabled(false);
         jScrollPane1.setViewportView(tableCategorias);
+
+        btnEliminar.setText("ELIMINAR CATEGORIA");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(95, 95, 95)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 473, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(95, 95, 95)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 473, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(262, 262, 262)
+                        .addComponent(btnEliminar)))
                 .addContainerGap(116, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -89,7 +101,9 @@ public class listaCategorias extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(44, 44, 44)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 411, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(115, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(37, Short.MAX_VALUE))
         );
 
         pack();
@@ -118,8 +132,24 @@ public class listaCategorias extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_formInternalFrameOpened
 
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        try {
+            int selectedRow = tableCategorias.getSelectedRow();
+            if (selectedRow != -1) { // Asegurarse de que se haya seleccionado una fila
+                Object id = tableCategorias.getValueAt(selectedRow, 0); // Obtener el valor de la columna ID de la fila seleccionada
+                control.eliminarCategoria((int) id);
+                DefaultTableModel model = (DefaultTableModel) tableCategorias.getModel();
+                model.removeRow(selectedRow);
+                 JOptionPane.showMessageDialog(null, "Categoria eliminada", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "No se pudo eliminar la categoria, asegurese que no haya productos asociados con ella", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnEliminar;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tableCategorias;
     // End of variables declaration//GEN-END:variables

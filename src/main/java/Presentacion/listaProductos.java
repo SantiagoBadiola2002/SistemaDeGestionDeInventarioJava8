@@ -42,7 +42,8 @@ public class listaProductos extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        tableCategorias = new javax.swing.JTable();
+        tableProductos = new javax.swing.JTable();
+        btnEliminar = new javax.swing.JButton();
 
         setClosable(true);
         setTitle("Lista Productos");
@@ -65,7 +66,7 @@ public class listaProductos extends javax.swing.JInternalFrame {
             }
         });
 
-        tableCategorias.setModel(new javax.swing.table.DefaultTableModel(
+        tableProductos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -73,8 +74,14 @@ public class listaProductos extends javax.swing.JInternalFrame {
 
             }
         ));
-        tableCategorias.setEnabled(false);
-        jScrollPane1.setViewportView(tableCategorias);
+        jScrollPane1.setViewportView(tableProductos);
+
+        btnEliminar.setText("ELIMINAR PRODUCTO");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -82,60 +89,81 @@ public class listaProductos extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(23, 23, 23)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 867, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 749, Short.MAX_VALUE)
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(296, 296, 296)
+                .addComponent(btnEliminar)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(44, 44, 44)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 411, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(226, Short.MAX_VALUE))
+                .addGap(44, 44, 44)
+                .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(100, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
-         try {
-        // Obtener los productos del controlador
-        ArrayList<DTProducto> productos = (ArrayList<DTProducto>) control.traerDTProductos();
+        try {
+            // Obtener los productos del controlador
+            ArrayList<DTProducto> productos = (ArrayList<DTProducto>) control.traerDTProductos();
 
-        // Crear el modelo de la tabla
-        DefaultTableModel modelo = new DefaultTableModel();
-        modelo.addColumn("ID");
-        modelo.addColumn("Nombre");
-        modelo.addColumn("Descripción");
-        modelo.addColumn("Precio");
-        modelo.addColumn("Cantidad en Stock");
-        modelo.addColumn("Descripcion");
-        modelo.addColumn("Proveedor");
+            // Crear el modelo de la tabla
+            DefaultTableModel modelo = new DefaultTableModel();
+            modelo.addColumn("ID");
+            modelo.addColumn("Nombre");
+            modelo.addColumn("Descripción");
+            modelo.addColumn("Precio");
+            modelo.addColumn("Cantidad en Stock");
+            modelo.addColumn("Descripcion");
+            modelo.addColumn("Proveedor");
 
-        // Llenar el modelo de tabla con los datos del ArrayList
-        for (DTProducto producto : productos) {
-            modelo.addRow(new Object[]{
+            // Llenar el modelo de tabla con los datos del ArrayList
+            for (DTProducto producto : productos) {
+                modelo.addRow(new Object[]{
                     producto.getId(),
                     producto.getNombre(),
                     producto.getDescripcion(),
                     producto.getPrecio(),
                     producto.getCantidadEnStock(),
                     producto.getNombreCategoria(),
-                    producto.getNombreProveedor(),
-            });
+                    producto.getNombreProveedor(),});
+            }
+
+            // Asignar el modelo de tabla al JTable
+            tableProductos.setModel(modelo);
+
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Error al listar los productos", "Error", JOptionPane.ERROR_MESSAGE);
         }
-
-        // Asignar el modelo de tabla al JTable
-        tableCategorias.setModel(modelo);
-
-    } catch (Exception ex) {
-        JOptionPane.showMessageDialog(null, "Error al listar los productos", "Error", JOptionPane.ERROR_MESSAGE);
-    }
 
     }//GEN-LAST:event_formInternalFrameOpened
 
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        try {
+            int selectedRow = tableProductos.getSelectedRow();
+            if (selectedRow != -1) { // Asegurarse de que se haya seleccionado una fila
+                Object id = tableProductos.getValueAt(selectedRow, 0); // Obtener el valor de la columna ID de la fila seleccionada
+                control.eliminarProducto((Long) id);
+                DefaultTableModel model = (DefaultTableModel) tableProductos.getModel();
+                model.removeRow(selectedRow);
+                JOptionPane.showMessageDialog(null, "Producto eliminado", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "No se pudo eliminar el producto", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnEliminar;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tableCategorias;
+    private javax.swing.JTable tableProductos;
     // End of variables declaration//GEN-END:variables
 }

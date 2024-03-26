@@ -20,6 +20,7 @@ Presentacion\listaProductos.class
 Presentacion\modificarProveedor$2.class
 Logica\Controladora.class
 Presentacion\modificarProveedor.class
+Presentacion\listaProductos$2.class
 Presentacion\ventanaPrincipal$3.class
 Presentacion\modificarProducto$3.class
 porDefecto\main.class
@@ -30,6 +31,8 @@ Presentacion\exceptions\PreexistingEntityException.class
 Presentacion\modificarCategoria$1.class
 Presentacion\ventanaPrincipal$6.class
 Presentacion\listaProductos$1.class
+Presentacion\listaProveedores$2.class
+Presentacion\listaCategorias$2.class
 Presentacion\modificarCategoria$2.class
 Presentacion\modificarCategoria.class
 Presentacion\modificarProducto$1.class

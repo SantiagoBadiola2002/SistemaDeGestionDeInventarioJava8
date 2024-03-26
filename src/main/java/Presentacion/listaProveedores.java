@@ -40,8 +40,12 @@ public class listaProveedores extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        btnEliminar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tableCategorias = new javax.swing.JTable();
+        tableProveedores = new javax.swing.JTable();
+        btnEliminar2 = new javax.swing.JButton();
+
+        btnEliminar.setText("ELIMINAR CATEGORIA");
 
         setClosable(true);
         setTitle("Lista Proveedores");
@@ -64,7 +68,7 @@ public class listaProveedores extends javax.swing.JInternalFrame {
             }
         });
 
-        tableCategorias.setModel(new javax.swing.table.DefaultTableModel(
+        tableProveedores.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -72,24 +76,37 @@ public class listaProveedores extends javax.swing.JInternalFrame {
 
             }
         ));
-        tableCategorias.setEnabled(false);
-        jScrollPane1.setViewportView(tableCategorias);
+        jScrollPane1.setViewportView(tableProveedores);
+
+        btnEliminar2.setText("ELIMINAR PRODUCTO");
+        btnEliminar2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminar2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(95, 95, 95)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 473, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(116, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(95, 95, 95)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 473, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(262, 262, 262)
+                        .addComponent(btnEliminar2)))
+                .addContainerGap(114, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(44, 44, 44)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 411, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(115, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(btnEliminar2, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         pack();
@@ -111,7 +128,7 @@ public class listaProveedores extends javax.swing.JInternalFrame {
             }
 
             // Asignar el modelo de tabla al JTable
-            tableCategorias.setModel(modelo);
+            tableProveedores.setModel(modelo);
 
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Error al listar los proveedores", "Error", JOptionPane.ERROR_MESSAGE);
@@ -119,9 +136,26 @@ public class listaProveedores extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_formInternalFrameOpened
 
+    private void btnEliminar2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminar2ActionPerformed
+        try {
+            int selectedRow = tableProveedores.getSelectedRow();
+            if (selectedRow != -1) { // Asegurarse de que se haya seleccionado una fila
+                Object id = tableProveedores.getValueAt(selectedRow, 0); // Obtener el valor de la columna ID de la fila seleccionada
+                control.eliminarProveedor((String) id);
+                DefaultTableModel model = (DefaultTableModel) tableProveedores.getModel();
+                model.removeRow(selectedRow);
+                JOptionPane.showMessageDialog(null, "Proveedor eliminado", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "No se pudo eliminar el proveedor, asegurese que no haya productos asociados a el", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnEliminar2ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnEliminar2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tableCategorias;
+    private javax.swing.JTable tableProveedores;
     // End of variables declaration//GEN-END:variables
 }
